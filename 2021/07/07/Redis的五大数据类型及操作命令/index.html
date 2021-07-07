@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Redis的五大数据类型及操作命令 | LJC’sBlog</title><meta name="description" content="Redis的五大数据类型及常用命令Redis 键(key) 的常用命令该命令用在key存在时删除key  1Del key  序列化给定key，并返回被序列化的值  1DUMP key  检查给定的key是否存在  1EXISTS key  为给定key设置过期时间  1EXPIRE key seconds  EXPIREAT的作用和EXPIRE类似，都用于为key设置过期时间，不同在于EXPIR"><meta name="keywords" content="Redis"><meta name="author" content="Hello World攻城狮"><meta name="copyright" content="Hello World攻城狮"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/buffifly/img/favicon.ico"><link rel="canonical" href="http://www.ljc.cn.com/buffifly/2021/07/07/Redis%E7%9A%84%E4%BA%94%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%8F%8A%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4/"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin="crossorigin"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta property="og:type" content="article"><meta property="og:title" content="Redis的五大数据类型及操作命令"><meta property="og:url" content="http://www.ljc.cn.com/buffifly/2021/07/07/Redis%E7%9A%84%E4%BA%94%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%8F%8A%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4/"><meta property="og:site_name" content="LJC’sBlog"><meta property="og:description" content="Redis的五大数据类型及常用命令Redis 键(key) 的常用命令该命令用在key存在时删除key  1Del key  序列化给定key，并返回被序列化的值  1DUMP key  检查给定的key是否存在  1EXISTS key  为给定key设置过期时间  1EXPIRE key seconds  EXPIREAT的作用和EXPIRE类似，都用于为key设置过期时间，不同在于EXPIR"><meta property="og:image" content="http://www.ljc.cn.com/buffifly/img/cover/bg8.jpg"><meta property="article:published_time" content="2021-07-07T00:54:08.000Z"><meta property="article:modified_time" content="2021-07-07T05:51:36.471Z"><meta name="twitter:card" content="summary"><script>var activateDarkMode = function () {
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Redis的五大数据类型及操作命令 | LJC’sBlog</title><meta name="description" content="Redis的五大数据类型及常用命令Redis 键(key) 的常用命令该命令用在key存在时删除key  1Del key  序列化给定key，并返回被序列化的值  1DUMP key  检查给定的key是否存在  1EXISTS key  为给定key设置过期时间  1EXPIRE key seconds  EXPIREAT的作用和EXPIRE类似，都用于为key设置过期时间，不同在于EXPIR"><meta name="keywords" content="Redis"><meta name="author" content="Hello World攻城狮"><meta name="copyright" content="Hello World攻城狮"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/buffifly/img/favicon.ico"><link rel="canonical" href="http://www.ljc.cn.com/buffifly/2021/07/07/Redis%E7%9A%84%E4%BA%94%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%8F%8A%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4/"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin="crossorigin"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta property="og:type" content="article"><meta property="og:title" content="Redis的五大数据类型及操作命令"><meta property="og:url" content="http://www.ljc.cn.com/buffifly/2021/07/07/Redis%E7%9A%84%E4%BA%94%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%8F%8A%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4/"><meta property="og:site_name" content="LJC’sBlog"><meta property="og:description" content="Redis的五大数据类型及常用命令Redis 键(key) 的常用命令该命令用在key存在时删除key  1Del key  序列化给定key，并返回被序列化的值  1DUMP key  检查给定的key是否存在  1EXISTS key  为给定key设置过期时间  1EXPIRE key seconds  EXPIREAT的作用和EXPIRE类似，都用于为key设置过期时间，不同在于EXPIR"><meta property="og:image" content="http://www.ljc.cn.com/buffifly/img/cover/bg8.jpg"><meta property="article:published_time" content="2021-07-07T00:54:08.000Z"><meta property="article:modified_time" content="2021-07-07T12:36:34.752Z"><meta name="twitter:card" content="summary"><script>var activateDarkMode = function () {
   document.documentElement.setAttribute('data-theme', 'dark')
   if (document.querySelector('meta[name="theme-color"]') !== null) {
     document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000')
@@ -89,7 +89,7 @@ if (autoChangeMode === '1') {
   isHome: false,
   isHighlightShrink: false,
   isSidebar: true,
-  postUpdate: '2021-07-07 13:51:36'
+  postUpdate: '2021-07-07 20:36:34'
 }</script><noscript><style>
 #nav {
   opacity: 1
@@ -97,7 +97,7 @@ if (autoChangeMode === '1') {
 .justified-gallery img{
   opacity: 1
 }
-</style></noscript><link rel="stylesheet" href="APlayer.min.css"><div id="aplayer"></div><script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js" async></script><link rel="stylesheet" href="/buffifly/css/VolantisTags.css"><link rel="stylesheet" href="/buffifly/css/volantis.css"><link rel="stylesheet" href="/buffifly/css/fontAnimation.css"><meta name="generator" content="Hexo 4.2.1"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><canvas class="fireworks"></canvas><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/buffifly/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/buffifly/archives/"><div class="headline">文章</div><div class="length_num">4</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/buffifly/tags/"><div class="headline">标签</div><div class="length_num">4</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/buffifly/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/buffifly/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/buffifly/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fas fa-list"></i><span> 远方杂谈</span><i class="fas fa-chevron-down menus-expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/buffifly/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/buffifly/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/buffifly/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我的</span></a></div></div></div></div><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis的五大数据类型及常用命令"><span class="toc-number">1.</span> <span class="toc-text">Redis的五大数据类型及常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#"><span class="toc-number">1.1.</span> <span class="toc-text">Redis 键(key) 的常用命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#-1"><span class="toc-number">1.2.</span> <span class="toc-text">String（字符串）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis中String的常用命令"><span class="toc-number">1.2.1.</span> <span class="toc-text">Redis中String的常用命令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#-2"><span class="toc-number">1.3.</span> <span class="toc-text">Hash（哈希，类似java里的Map）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#-3"><span class="toc-number">1.4.</span> <span class="toc-text">List（列表）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#-4"><span class="toc-number">1.5.</span> <span class="toc-text">Set（集合）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#-5"><span class="toc-number">1.6.</span> <span class="toc-text">Zset(sorted set：有序集合)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#联系博主"><span class="toc-number">2.</span> <span class="toc-text">联系博主</span></a></li></ol></div></div></div><div id="body-wrap"><div id="web_bg" data-type="photo"></div><header class="post-bg" id="page-header" style="background-image: url(/buffifly/img/cover/bg8.jpg)"><nav id="nav"><span class="pull-left" id="blog_name"><a class="blog_title" id="site-name" href="/buffifly/">LJC’sBlog</a></span><span class="pull-right menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/buffifly/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/buffifly/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/buffifly/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fas fa-list"></i><span> 远方杂谈</span><i class="fas fa-chevron-down menus-expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/buffifly/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/buffifly/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/buffifly/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我的</span></a></div></div><span class="toggle-menu close"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">Redis的五大数据类型及操作命令</div></div><div id="post-meta"><div class="meta-firstline"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2021-07-07 08:54:08"><i class="far fa-calendar-alt fa-fw"></i> 发表于 2021-07-07</span><span class="post-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2021-07-07 13:51:36"><i class="fas fa-history fa-fw"></i> 更新于 2021-07-07</span></time></div><div class="meta-secondline"> <span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta__icon"></i><span>字数总计:</span><span class="word-count">574</span><span class="post-meta__separator">|</span><i class="far fa-clock fa-fw post-meta__icon"></i><span>阅读时长: 2 分钟</span></span></div><div class="meta-thirdline"><span class="post-meta-pv-cv"><span class="post-meta__separator">|</span><i class="far fa-eye fa-fw post-meta__icon"></i><span>阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-commentcount"></span><span class="post-meta__separator">|</span><i class="far fa-comments fa-fw post-meta__icon"></i><span>评论数:</span><a href="/buffifly/2021/07/07/Redis%E7%9A%84%E4%BA%94%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%8F%8A%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count comment-count" data-xid="/buffifly/2021/07/07/Redis%E7%9A%84%E4%BA%94%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%8F%8A%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4/" itemprop="commentCount"></span></a></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h2 id="Redis的五大数据类型及常用命令"><a href="#Redis的五大数据类型及常用命令" class="headerlink" title="Redis的五大数据类型及常用命令"></a>Redis的五大数据类型及常用命令</h2><h3 id=""><a href="#" class="headerlink" title=""></a><p class='p small'>Redis 键(key) 的常用命令</p></h3><p class='p small'>该命令用在key存在时删除key</p>
+</style></noscript><link rel="stylesheet" href="APlayer.min.css"><div id="aplayer"></div><script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js" async></script><link rel="stylesheet" href="/buffifly/css/VolantisTags.css"><link rel="stylesheet" href="/buffifly/css/volantis.css"><link rel="stylesheet" href="/buffifly/css/fontAnimation.css"><meta name="generator" content="Hexo 4.2.1"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><canvas class="fireworks"></canvas><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/buffifly/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/buffifly/archives/"><div class="headline">文章</div><div class="length_num">4</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/buffifly/tags/"><div class="headline">标签</div><div class="length_num">4</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/buffifly/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/buffifly/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/buffifly/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fas fa-list"></i><span> 远方杂谈</span><i class="fas fa-chevron-down menus-expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/buffifly/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/buffifly/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/buffifly/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我的</span></a></div></div></div></div><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis的五大数据类型及常用命令"><span class="toc-number">1.</span> <span class="toc-text">Redis的五大数据类型及常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#"><span class="toc-number">1.1.</span> <span class="toc-text">Redis 键(key) 的常用命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#-1"><span class="toc-number">1.2.</span> <span class="toc-text">String（字符串）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis中String的常用命令"><span class="toc-number">1.2.1.</span> <span class="toc-text">Redis中String的常用命令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#-2"><span class="toc-number">1.3.</span> <span class="toc-text">Hash（哈希，类似java里的Map）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#-3"><span class="toc-number">1.4.</span> <span class="toc-text">List（列表）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#-4"><span class="toc-number">1.5.</span> <span class="toc-text">Set（集合）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#-5"><span class="toc-number">1.6.</span> <span class="toc-text">Zset(sorted set：有序集合)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#联系博主"><span class="toc-number">2.</span> <span class="toc-text">联系博主</span></a></li></ol></div></div></div><div id="body-wrap"><div id="web_bg" data-type="photo"></div><header class="post-bg" id="page-header" style="background-image: url(/buffifly/img/cover/bg8.jpg)"><nav id="nav"><span class="pull-left" id="blog_name"><a class="blog_title" id="site-name" href="/buffifly/">LJC’sBlog</a></span><span class="pull-right menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/buffifly/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/buffifly/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/buffifly/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fas fa-list"></i><span> 远方杂谈</span><i class="fas fa-chevron-down menus-expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/buffifly/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/buffifly/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/buffifly/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我的</span></a></div></div><span class="toggle-menu close"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">Redis的五大数据类型及操作命令</div></div><div id="post-meta"><div class="meta-firstline"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2021-07-07 08:54:08"><i class="far fa-calendar-alt fa-fw"></i> 发表于 2021-07-07</span><span class="post-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2021-07-07 20:36:34"><i class="fas fa-history fa-fw"></i> 更新于 2021-07-07</span></time></div><div class="meta-secondline"> <span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta__icon"></i><span>字数总计:</span><span class="word-count">739</span><span class="post-meta__separator">|</span><i class="far fa-clock fa-fw post-meta__icon"></i><span>阅读时长: 2 分钟</span></span></div><div class="meta-thirdline"><span class="post-meta-pv-cv"><span class="post-meta__separator">|</span><i class="far fa-eye fa-fw post-meta__icon"></i><span>阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-commentcount"></span><span class="post-meta__separator">|</span><i class="far fa-comments fa-fw post-meta__icon"></i><span>评论数:</span><a href="/buffifly/2021/07/07/Redis%E7%9A%84%E4%BA%94%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%8F%8A%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count comment-count" data-xid="/buffifly/2021/07/07/Redis%E7%9A%84%E4%BA%94%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%8F%8A%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4/" itemprop="commentCount"></span></a></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h2 id="Redis的五大数据类型及常用命令"><a href="#Redis的五大数据类型及常用命令" class="headerlink" title="Redis的五大数据类型及常用命令"></a>Redis的五大数据类型及常用命令</h2><h3 id=""><a href="#" class="headerlink" title=""></a><p class='p small'>Redis 键(key) 的常用命令</p></h3><p class='p small'>该命令用在key存在时删除key</p>
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Del key</span><br></pre></td></tr></table></figure>
 
@@ -198,33 +198,326 @@ if (autoChangeMode === '1') {
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">STRLEN key</span><br></pre></td></tr></table></figure>
 
-<p class='p small'>同时</p>
+<p class='p small'>同时设置多个key value</p>
 
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MSET k1 v1 k2 v2</span><br></pre></td></tr></table></figure>
 
+<p class='p small'>同时设置一个或者多个键值对，仅当前所有key都不存在</p>
 
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MSETNX k1 v1 k2 v2</span><br></pre></td></tr></table></figure>
 
+<p class='p small'>以毫秒为单位设置key的生存时间</p>
 
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PSETEX key milliseconds value</span><br></pre></td></tr></table></figure>
 
+<p class='p small'>将key中存储的数字值增1</p>
 
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INCR key</span><br></pre></td></tr></table></figure>
 
+<p class='p small'>将key所存储的值加上给定的增量值（inceement）</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INCRBY key inceement</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>将key所存储的值加上给定的浮点增量值（inceement）</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INCRBYFLOAT key increment</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>将key中存储的数字减一</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DECR key</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>将key所存储的值减去给定的减量值（decrement）</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DECRBY key decrement</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>如果key存在并且是一个字符串，将值追加到key的末尾</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">APPEND key value</span><br></pre></td></tr></table></figure>
 
 <br/>
 
-<h3 id="-2"><a href="#-2" class="headerlink" title=""></a><p class='p small'>Hash（哈希，类似java里的Map）</p></h3><p class='p small'>Redis hash 是一个键值对集合。 Redis hash是一个string类型的field和value的映射表，hash特别适合用于存储对象。 类似Java里面的Map<String</p>
+<h3 id="-2"><a href="#-2" class="headerlink" title=""></a><p class='p small'>Hash（哈希，类似java里的Map）</p></h3><p class='p small'>Redis hash 是一个键值对集合。 Redis hash是一个string类型的field和value的映射表，hash特别适合用于存储对象。</p>
+
+<p class='p small'>类似Java里面的Map<String</p>
+
+<p class='p small'>删除一个或多个哈西表字段</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HDEL key fieId2 field2.....</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>查看哈西表key中，指定的字段是否存在</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HEXISTS key field</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>获取存储在哈希表中指定字段的值</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HGET key field</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>获取在哈希表中指定key的所有字段的值</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HGETALL key</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>为哈希表key中的指定字段的整数值加上增量increment</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HINCRBY key field increment</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>为哈希表key中的指定字段的浮点数值加上增量increment</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HINCRBYELOAT key field increment</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>获取所有哈希表中的字段</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HKEYS key</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>获取哈希表中字段的数量</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HLEN key</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>获取所有给定字段的值</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HMGET key field1 field2</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>同时将多个field-value对设置到哈希表key中</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HMSET key firld1 value1 firld2 value2</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>将哈希表key中的字段firld的值设value</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HSET key firld value</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>只有在字段field不存在时，设置哈希表字段的值</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HSETNX key firld value</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>获取哈希表中所有值</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HVALS key</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>迭代哈希表中的键值对</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HSCAN key cursor [MATCH pattern] [COUNT count]</span><br></pre></td></tr></table></figure>
+
+
 
 <br/>
 
 <h3 id="-3"><a href="#-3" class="headerlink" title=""></a><p class='p small'>List（列表）</p></h3><p class='p small'>Redis 列表是简单的字符串列表，按照插入顺序排序，你可以添加一个元素导列表的头部（左边）或者尾部（右边）它的底层实际是个链表</p>
 
+<p class='p small'>通过索引获取列表中的元素</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LINDEX key index</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>在列表的元素前或后插入元素</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LINSERT key BEFOREIAFTER pivot value</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>获取列表长度</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LLEN key</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>移出并获取列表的第一个元素</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LPOP key</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>将一个或多个值插入到列表头部</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LPUSH k1 v1 k2 v2</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>将一个或多个值插入到已存在的列表头部</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LPUSHX k1 v1 k2 v2</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>获取列表指定范围内的元素</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LRANGE key start stop</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>移除列表元素</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LREM key count value</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>通过索引设置列表元素的值</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LSET key index value</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>移除并获取列表最后一个元素</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RPOP key</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>移除列表最后一个元素，并将该元素添加到另一个列表并返回</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RPOPLPUSH source destination</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>在列表中添加一个或多个值</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RPUSH key v1 v2 v3......</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>为已存在的列表添加值</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RPUSHX key value</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>移除并获取列表第一个元素，如果没有则阻塞队列直到发现或等待超时</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BLPOP k1 k2 timeout</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>移除并获取列表最后一个元素，如果没有则阻塞队列直到发现或等待超时</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BRPOP k1 k2 timeout</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>从列表弹出一个值，并将该元素插入到另一个列表中并返回他，如果没有则阻塞队列直到发现或等待超时</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BRPOPLPUSH source destination timeout</span><br></pre></td></tr></table></figure>
+
 <br/>
 
 <h3 id="-4"><a href="#-4" class="headerlink" title=""></a><p class='p small'>Set（集合）</p></h3><p class='p small'>Redis的Set是string类型的无序集合。它是通过HashTable实现实现的</p>
+
+<p class='p small'>向集合添加一个或多个成员</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SADD key member1 member2</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>获取集合的成员数</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SCARD key</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>返回给定所有集合的差集</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SDIFF key1 key2</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>返回给定所有集合的差集并存储在destination中</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SDIFFSTORE destination k1 k2</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>返回给定所有集合的交集</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SINTER k1 k2</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>返回给定所有集合的交集并存储在destination中</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SINTERSTORE destination k1 k2</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>判断member元素是否是集合key的成员</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SISMEMBER key member</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>返回集合中所有成员</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SMEMBERS key</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>将member元素从source集合移动到destination集合</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SMOVE source destination member</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>移除并返回集合中一个随机元素</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SPOP key</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>返回集合中一个或多个随机数</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SRANDMEMBER key count</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>移除集合中一个或多个成员</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SREM key member1 member2</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>返回所有给定集合的并集</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SUNION k1 k2</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>所有给定集合的并集存储在destination集合中</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SUNIONSTORE destination k1 k2</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>迭代集合中的元素</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SSCAN key cursor [MATCH pattem][COUNT count]</span><br></pre></td></tr></table></figure>
 
 <br/>
 
 <h3 id="-5"><a href="#-5" class="headerlink" title=""></a><p class='p small'>Zset(sorted set：有序集合)</p></h3><p class='p small'>Redis zset 和 set 一样也是string类型元素的集合</p>
 
 <p class='p small'>Redis正是通过分数来为集合中的成员进行从小到大的排序。zset的成员是唯一的</p>
+
+<p class='p small'>向有序集合添加一个或多个成员，或者更新已存在成员的分数</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZADD key score1 member1 [score2 member2]</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>获取有序集合的成员数</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZCARD key</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>计算在有序集合中指定区间分数的成员数</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZCOUNT key min max</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>有序集合中对指定成员的分数加上增量 increment</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZINCRBY key increment member</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>计算给定的一个或多个有序集的交集并将结果集存储在新的有序集合 destination 中</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZINTERSTORE destination numkeys key [key ...]</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>在有序集合中计算指定字典区间内成员数量</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZLEXCOUNT key min max</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>通过索引区间返回有序集合指定区间内的成员</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZRANGE key start stop [WITHSCORES]</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>通过字典区间返回有序集合的成员</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZRANGEBYLEX key min max [LIMIT offset count]</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>通过分数返回有序集合指定区间内的成员</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZRANGEBYSCORE key min max [WITHSCORES] [LIMIT]</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>返回有序集合中指定成员的索引</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZRANK key member</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>移除有序集合中的一个或多个成员</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZREM key member [member ...]</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>移除有序集合中给定的字典区间的所有成员</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZREMRANGEBYLEX key min max</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>移除有序集合中给定的排名区间的所有成员</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZREMRANGEBYRANK key start stop</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>移除有序集合中给定的排名区间的所有成员</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZREMRANGEBYSCORE key min max</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>返回有序集中指定区间内的成员，通过索引，分数从高到低</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZREVRANGE key start stop [WITHSCORES]</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>返回有序集中指定分数区间内的成员，分数从高到低排序</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZREVRANGEBYSCORE key max min [WITHSCORES]</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>返回有序集合中指定成员的排名，有序集成员按分数值递减(从大到小)排序</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZREVRANK key member</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>返回有序集中，成员的分数值</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZSCORE key member</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>计算给定的一个或多个有序集的并集，并存储在新的 key 中</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZUNIONSTORE destination numkeys key [key ...]</span><br></pre></td></tr></table></figure>
+
+<p class='p small'>迭代有序集合中的元素（包括元素成员和元素分值）</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZSCAN key cursor [MATCH pattern] [COUNT count]</span><br></pre></td></tr></table></figure>
+
+
+
 <br/>
 
 <h2 id="联系博主"><a href="#联系博主" class="headerlink" title="联系博主"></a>联系博主</h2><div class="btns circle center grid5">
